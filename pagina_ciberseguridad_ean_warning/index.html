@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Demostración de ciberseguridad — EAN</title>
+  <style>
+    :root { color-scheme: dark; --green: #5bff9b; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; min-height: 100vh; display: grid; place-items: center;
+      padding: 24px; background: radial-gradient(circle at top, #193d2b, #07110e 65%);
+      color: #e8fff0; font-family: "Times New Roman", serif;
+    }
+    main { width: min(900px, 100%); text-align: center; }
+    .eyebrow { color: var(--green); letter-spacing: .16em; text-transform: uppercase; font: 12px/1.5 Arial, sans-serif; }
+    h1 { font-size: clamp(28px, 5vw, 44px); margin: 10px 0 8px; }
+    .intro { color: #bdd8c7; font-size: 18px; margin: 0 0 22px; }
+    .scene {
+      position: relative; width: min(680px, 100%); margin: 0 auto;
+      border: 2px solid #6bffad; border-radius: 12px; overflow: hidden;
+      background: #07110e; box-shadow: 0 0 28px #40ff8b25;
+    }
+    .scene img { display: block; width: 100%; height: auto; }
+    .image-button {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      padding: 0; border: 0; background: transparent; cursor: pointer;
+    }
+    .image-button:focus-visible { outline: 3px solid white; outline-offset: -6px; }
+    .overlay {
+      position: absolute; left: 50%; top: 51%; transform: translate(-50%, -50%);
+      width: min(82%, 500px); padding: clamp(12px, 3vw, 24px);
+      border: 2px solid #ff6767; border-radius: 12px;
+      background: rgba(35, 5, 8, .92); color: #fff4f4;
+      box-shadow: 0 0 25px rgba(255, 40, 40, .45);
+      text-align: left; z-index: 2; pointer-events: none;
+      animation: pop-in .22s ease-out;
+    }
+    .overlay[hidden] { display: none; }
+    .warning-title {
+      display: flex; align-items: center; gap: 9px; margin: 0 0 10px;
+      color: #ff7777; font: bold clamp(17px, 3vw, 23px) Arial, sans-serif;
+      text-transform: uppercase;
+    }
+    .warning-icon { font-size: 1.25em; }
+    .overlay p { margin: 0; font-size: clamp(16px, 2.7vw, 23px); line-height: 1.35; }
+    .hint { color: #9fc6ad; font: 14px Arial, sans-serif; margin: 14px 0 0; }
+    .reset {
+      margin-top: 16px; border: 1px solid #7dbd96; background: transparent;
+      color: #e8fff0; padding: 9px 16px; border-radius: 8px; cursor: pointer;
+    }
+    .note { margin-top: 24px; font: 13px/1.5 Arial, sans-serif; color: #9fc6ad; }
+    @keyframes pop-in { from { opacity: 0; transform: translate(-50%, -46%) scale(.96); } to { opacity: 1; transform: translate(-50%, -50%) scale(1); } }
+    @media (prefers-reduced-motion: reduce) { .overlay { animation: none; } }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="eyebrow">Taller de ciberseguridad</div>
+    <h1>¿Confías en lo que ves?</h1>
+    <p class="intro">Haz clic en la imagen para mostrar una alerta sobre el gato.</p>
+
+    <div class="scene">
+      <img src="imagen_ciberseguridad.jpg" alt="Ilustración de un gato detrás de una lupa, con código binario verde">
+      <button class="image-button" id="reveal" type="button" aria-label="Mostrar alerta" aria-expanded="false" aria-controls="warning"></button>
+      <section class="overlay" id="warning" role="alert" aria-live="assertive" hidden>
+        <h2 class="warning-title"><span class="warning-icon">⚠</span> Advertencia de seguridad</h2>
+        <p>Ingenieros de sistemas de EAN: los seres humanos son el eslabón más débil de la cadena global de ciberseguridad...</p>
+      </section>
+    </div>
+    <p class="hint">Pulsa la imagen para mostrar u ocultar la alerta.</p>
+    <button class="reset" id="ocultar" type="button">Ocultar mensaje</button>
+    <p class="note">Demostración educativa: la alerta aparece como una capa visual sobre la imagen. No ejecuta archivos BAT/VBS ni oculta código ejecutable.</p>
+  </main>
+  <script>
+    const boton = document.getElementById('reveal');
+    const alerta = document.getElementById('warning');
+    const ocultar = document.getElementById('ocultar');
+    function mostrarAlerta(mostrar) {
+      alerta.hidden = !mostrar;
+      boton.setAttribute('aria-expanded', String(mostrar));
+    }
+    boton.addEventListener('click', () => mostrarAlerta(alerta.hidden));
+    ocultar.addEventListener('click', () => mostrarAlerta(false));
+  </script>
+</body>
+</html>
